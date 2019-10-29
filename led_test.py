@@ -32,10 +32,10 @@ try:
             print(str(randTemp) + degree_sign + "C: low temp")
             for n in range(5):
                 for n in range(max_bright):
-                    b.ChangeDutyCycle(n)
+                    b.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
                 for n in range(max_bright):
-                    b.ChangeDutyCycle(max_bright - n)
+                    b.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
             # for n in range(5):
             #     GPIO.output(blueLED, GPIO.HIGH)
@@ -46,10 +46,10 @@ try:
             print(str(randTemp) + degree_sign + "C: medium temp")
             for n in range(5):
                 for n in range(max_bright):
-                    g.ChangeDutyCycle(n)
+                    g.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
                 for n in range(max_bright):
-                    g.ChangeDutyCycle(max_bright - n)
+                    g.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
             # for n in range(5):
             #     GPIO.output(greenLED, GPIO.HIGH)
@@ -60,10 +60,10 @@ try:
             print(str(randTemp) + degree_sign + "C: high temp")
             for n in range(5):
                 for n in range(max_bright):
-                    r.ChangeDutyCycle(n)
+                    r.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
                 for n in range(max_bright):
-                    r.ChangeDutyCycle(max_bright - n)
+                    r.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
             # for n in range(5):
             #     GPIO.output(redLED, GPIO.HIGH)
