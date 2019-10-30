@@ -21,8 +21,8 @@ g.start(0)
 b = GPIO.PWM(blueLED, 100)
 b.start(0)
 
-max_bright = 80 # max brightness of PWM cycle
-pwm_delay = .05 # delay between cycles
+max_bright = 100 # max brightness of PWM cycle
+pwm_delay = .005 # delay between cycles
 pulses = 2
 
 degree_sign= u'\N{DEGREE SIGN}'
@@ -43,8 +43,8 @@ try:
                     b.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
         elif randTemp < 50:
-            print(str(randTemp) + degree_sign + "C: medium temp")
-            mylcd.lcd_display_string("Temp: " + str(randTemp) + chr(223) + "C (medium)", 1)
+            print(str(randTemp) + degree_sign + "C: mid temp")
+            mylcd.lcd_display_string("Temp: " + str(randTemp) + chr(223) + "C (mid)", 1)
             for i in range(pulses):
                 for n in range(max_bright):
                     g.ChangeDutyCycle(n+1)
@@ -63,7 +63,7 @@ try:
                     r.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
         mylcd.lcd_clear()
-        sleep(2)
+        sleep(.5)
 
 except KeyboardInterrupt:
     GPIO.cleanup()
