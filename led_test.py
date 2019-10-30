@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from time import sleep
 from random import random
+import I2C_LCD_driver
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -22,54 +23,46 @@ b.start(0)
 
 max_bright = 80 # max brightness of PWM cycle
 pwm_delay = .05 # delay between cycles
+pulses = 1
 
 degree_sign= u'\N{DEGREE SIGN}'
+
+mylcd = I2C_LCD_driver.lcd()
 
 try:
     while True:
         randTemp = round(75*random(), 1)
         if randTemp < 25:
             print(str(randTemp) + degree_sign + "C: low temp")
-            for i in range(5):
+            mylcd.lcd_display_string(str(randTemp) + degree_sign + "C: low temp", 1)
+            for i in range(pulses):
                 for n in range(max_bright):
                     b.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
                 for n in range(max_bright):
                     b.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
-            # for n in range(5):
-            #     GPIO.output(blueLED, GPIO.HIGH)
-            #     sleep(.5)
-            #     GPIO.output(blueLED, GPIO.LOW)
-            #     sleep(.5)
         elif randTemp < 50:
             print(str(randTemp) + degree_sign + "C: medium temp")
-            for i in range(5):
+            mylcd.lcd_display_string(str(randTemp) + degree_sign + "C: medium temp", 1)
+            for i in range(pulses):
                 for n in range(max_bright):
                     g.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
                 for n in range(max_bright):
                     g.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
-            # for n in range(5):
-            #     GPIO.output(greenLED, GPIO.HIGH)
-            #     sleep(.5)
-            #     GPIO.output(greenLED, GPIO.LOW)
-            #     sleep(.5)
         else:
             print(str(randTemp) + degree_sign + "C: high temp")
-            for i in range(5):
+            mylcd.lcd_display_string(str(randTemp) + degree_sign + "C: high temp", 1)
+            for i in range(pulses):
                 for n in range(max_bright):
                     r.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
                 for n in range(max_bright):
                     r.ChangeDutyCycle(max_bright - (n+1))
                     sleep(pwm_delay)
-            # for n in range(5):
-            #     GPIO.output(redLED, GPIO.HIGH)
-            #     sleep(.5)
-            #     GPIO.output(redLED, GPIO.LOW)
-            #     sleep(.5)
+        mylcd_lcd_clear()
         sleep(2)
 
 except KeyboardInterrupt:
