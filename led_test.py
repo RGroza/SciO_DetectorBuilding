@@ -34,7 +34,7 @@ try:
         randTemp = round(75*random(), 1)
         if randTemp < 25:
             print(str(randTemp) + degree_sign + "C: low temp")
-            mylcd.lcd_display_string("Temp: " + str(randTemp) + char(223) + "C (low)", 1)
+            mylcd.lcd_display_string("Temp: " + str(randTemp) + chr(223) + "C (low)", 1)
             for i in range(pulses):
                 for n in range(max_bright):
                     b.ChangeDutyCycle(n+1)
@@ -44,7 +44,7 @@ try:
                     sleep(pwm_delay)
         elif randTemp < 50:
             print(str(randTemp) + degree_sign + "C: medium temp")
-            mylcd.lcd_display_string("Temp: " + str(randTemp) + char(223) + "C (medium)", 1)
+            mylcd.lcd_display_string("Temp: " + str(randTemp) + chr(223) + "C (medium)", 1)
             for i in range(pulses):
                 for n in range(max_bright):
                     g.ChangeDutyCycle(n+1)
@@ -54,7 +54,7 @@ try:
                     sleep(pwm_delay)
         else:
             print(str(randTemp) + degree_sign + "C: high temp")
-            mylcd.lcd_display_string("Temp: " + str(randTemp) + char(223) + "C (high)", 1)
+            mylcd.lcd_display_string("Temp: " + str(randTemp) + chr(223) + "C (high)", 1)
             for i in range(pulses):
                 for n in range(max_bright):
                     r.ChangeDutyCycle(n+1)
