@@ -30,7 +30,7 @@ try:
         randTemp = round(75*random(), 1)
         if randTemp < 25:
             print(str(randTemp) + degree_sign + "C: low temp")
-            for n in range(5):
+            for i in range(5):
                 for n in range(max_bright):
                     b.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
@@ -44,7 +44,7 @@ try:
             #     sleep(.5)
         elif randTemp < 50:
             print(str(randTemp) + degree_sign + "C: medium temp")
-            for n in range(5):
+            for i in range(5):
                 for n in range(max_bright):
                     g.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
@@ -58,7 +58,7 @@ try:
             #     sleep(.5)
         else:
             print(str(randTemp) + degree_sign + "C: high temp")
-            for n in range(5):
+            for i in range(5):
                 for n in range(max_bright):
                     r.ChangeDutyCycle(n+1)
                     sleep(pwm_delay)
