@@ -6,7 +6,7 @@ import I2C_LCD_driver
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 
-redLED = 8
+redLED = 16
 greenLED = 10
 blueLED = 12
 
