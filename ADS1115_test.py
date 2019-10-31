@@ -32,7 +32,7 @@ try:
         lcd.lcd_clear()
     avg = Average(values)
     lcd.lcd_display_string('Average voltage: ', 1)
-    lcd.lcd_display_string(str(round(avg, 8)), 2)
+    lcd.lcd_display_string(str(round(avg, 8)) + 'V', 2)
     print('Average voltage: ' + str(avg) + 'V')
 except KeyboardInterrupt:
     lcd.lcd_clear()
