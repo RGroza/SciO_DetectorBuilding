@@ -3,6 +3,8 @@ import board
 import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
+import I2C_LCD_driver
+lcd= I2C_LCD_driver.lcd()
 
 # Create the I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -19,5 +21,8 @@ chan = AnalogIn(ads, ADS.P0)
 print("{:>5}\t{:>5}".format('raw', 'v'))
 
 while True:
+    u = chan.voltage
     print("{:>5}\t{:>5.3f}".format(chan.value, chan.voltage))
+    lcd.lcd_clear()
+    lcd.lcd_display_string('Voltage: ' + str(u) + 'V', 1)
     time.sleep(0.5)
