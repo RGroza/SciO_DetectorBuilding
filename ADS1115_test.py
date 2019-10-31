@@ -20,18 +20,19 @@ chan = AnalogIn(ads, ADS.P0)
 
 print("{:>5}\t{:>5}".format('raw', 'v'))
 values = []
+def Average(list):
+    return sum(list)/len(list)
 try:
     for i in range(50):
         u = chan.voltage
         values.append(u)
         print("{:>5}\t{:>5}".format(chan.value, chan.voltage))
-        lcd.lcd_clear()
         lcd.lcd_display_string('Voltage: ' + str(round(u, 8)) + 'V', 1)
         time.sleep(0.2)
-    def Average(list):
-        return sum(list)/len(list)
+        lcd.lcd_clear()
     avg = Average(values)
-    lcd.lcd_display_string('Average voltage: ' + str(round(avg, 8)) + 'V', 2)
-    print(avg)
+    lcd.lcd_display_string('Average voltage: ', 1)
+    lcd.lcd_display_string(str(round(avg, 8)), 2)
+    print('Average voltage: ' + str(avg) + 'V')
 except KeyboardInterrupt:
     lcd.lcd_clear()
