@@ -19,10 +19,12 @@ chan = AnalogIn(ads, ADS.P0)
 #chan = AnalogIn(ads, ADS.P0, ADS.P1)
 
 print("{:>5}\t{:>5}".format('raw', 'v'))
-
-while True:
-    u = chan.voltage
-    print("{:>5}\t{:>5.3f}".format(chan.value, chan.voltage))
+try:
+    while True:
+        u = chan.voltage
+        print("{:>5}\t{:>5}".format(chan.value, chan.voltage))
+        lcd.lcd_clear()
+        lcd.lcd_display_string('Voltage: ' + str(u) + 'V', 1)
+        time.sleep(0.5)
+except KeyboardInterrupt:
     lcd.lcd_clear()
-    lcd.lcd_display_string('Voltage: ' + str(u) + 'V', 1)
-    time.sleep(0.5)
