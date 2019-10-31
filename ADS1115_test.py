@@ -22,8 +22,8 @@ print("{:>5}\t{:>5}".format('raw', 'v'))
 values = []
 try:
     for i in range(50):
-        values[i] = chan.voltage
         u = chan.voltage
+        values.append() = u
         print("{:>5}\t{:>5}".format(chan.value, chan.voltage))
         lcd.lcd_clear()
         lcd.lcd_display_string('Voltage: ' + str(round(u, 8)) + 'V', 1)
