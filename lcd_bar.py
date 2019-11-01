@@ -62,7 +62,17 @@ fontdata1 = [
           0b11111,
           0b11111 ],
 
-        # char(6) - Right Bracket
+        # char(6) - Empty Char
+        [ 0b00000,
+          0b00000,
+          0b00000,
+          0b00000,
+          0b00000,
+          0b00000,
+          0b00000,
+          0b00000 ],
+
+        # char(7) - Right Bracket
         [ 0b11100,
           0b00100,
           0b00100,
@@ -83,29 +93,32 @@ value_range = (0.017, 0.027)
 
 try:
     while True:
+        mylcd.lcd_clear()
+
         random_value = random.uniform(value_range[0], value_range[1])
         print(random_value)
         bar_value = round(90*(random_value / value_range[1]))
         print(bar_value)
 
-        char_nums = [0, 0, 0, 0, 0]
+        char_nums = [0, 0, 0, 0, 0, 0]
 
         if bar_value % 5 != 0:
             char_nums[(bar_value % 5) - 1] = 1
         char_nums[4] = math.trunc(bar_value / 5)
+        char_nums[5] = 18 - sum(char_nums)
 
         char_nums.reverse()
         print(char_nums)
 
-        mylcd.lcd_write(0x80 + row_pos.get("4th"))
+        mylcd.lcd_write(0x80 + row_pos.get("3rd"))
 
         mylcd.lcd_write_char(0) # Left Bracket
         for idx, val in enumerate(char_nums):
             for n in range(val):
                 mylcd.lcd_write_char(5-idx)
-        mylcd.lcd_write_char(6) # Right Bracket
+        mylcd.lcd_write(0x80 + row_pos.get("3rd") + )
+        mylcd.lcd_write_char(7) # Right Bracket
 
         time.sleep(2)
-        mylcd.lcd_clear()
 except KeyboardInterrupt:
     exit()
