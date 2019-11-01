@@ -64,23 +64,23 @@ fontdata1 = [
           0b00000 ],
 
         # char(6) - Left Bracket
-        [ 0b00111,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b00111 ],
+        [ 0b01110,
+          0b01000,
+          0b01000,
+          0b01000,
+          0b01000,
+          0b01000,
+          0b01110 ],
 
         # char(7) - Right Bracket
-        [ 0b11100,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b00100,
-          0b11100 ],
+        [ 0b01110,
+          0b00010,
+          0b00010,
+          0b00010,
+          0b00010,
+          0b00010,
+          0b00010,
+          0b01110 ],
 ]
 
 mylcd = I2C_LCD_driver.lcd()
@@ -107,18 +107,18 @@ try:
         char_nums[4] = math.trunc(bar_value / 5)
 
         char_nums.reverse()
-        char_nums.append(18 - sum(char_nums))
+#        char_nums.append(18 - sum(char_nums))
         print(char_nums)
 
-        mylcd.lcd_write(0x80 + row_pos.get("3rd"))
+        mylcd.lcd_write(0x80)
 
-        mylcd.lcd_write_char(6) # Left Bracket
-#        idx = 0
-#        for val in char_nums:
-#            for n in range(val):
-#                mylcd.lcd_write_char(idx)
-#            idx += 1
-        mylcd.lcd_write_char(7) # Right Bracket
+#        mylcd.lcd_write_char(6) # Left Bracket
+        idx = 0
+        for val in char_nums:
+            for n in range(val):
+                mylcd.lcd_write_char(idx)
+            idx += 1
+#        mylcd.lcd_write_char(7) # Right Bracket
 
         time.sleep(2)
 except KeyboardInterrupt:
