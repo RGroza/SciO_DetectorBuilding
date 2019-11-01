@@ -97,7 +97,7 @@ try:
         char_nums.reverse()
         print(char_nums)
 
-        lcd_write(0x80 + row_pos.get("4th"))
+        mylcd.lcd_write(0x80 + row_pos.get("4th"))
 
         mylcd.lcd_write_char(0) # Left Bracket
         for idx, val in enumerate(char_nums):
