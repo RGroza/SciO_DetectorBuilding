@@ -105,18 +105,19 @@ try:
         if bar_value % 5 != 0:
             char_nums[(bar_value % 5) - 1] = 1
         char_nums[4] = math.trunc(bar_value / 5)
-        char_nums[5] = 18 - sum(char_nums)
 
         char_nums.reverse()
+        char_nums[5] = 18 - sum(char_nums)
         print(char_nums)
 
         mylcd.lcd_write(0x80 + row_pos.get("3rd"))
 
         mylcd.lcd_write_char(0) # Left Bracket
-        for idx, val in enumerate(char_nums):
+        idx = 0
+        for val in char_num:
             for n in range(val):
                 mylcd.lcd_write_char(5-idx)
-        mylcd.lcd_write(0x80 + row_pos.get("3rd") + )
+            idx += 1
         mylcd.lcd_write_char(7) # Right Bracket
 
         time.sleep(2)
