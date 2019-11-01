@@ -1,4 +1,4 @@
-#import I2C_LCD_driver
+import I2C_LCD_driver
 import time
 import random
 import math
@@ -72,6 +72,8 @@ fontdata1 = [
           0b00100,
           0b11100 ],
 ]
+
+mylcd = I2C_LCD_driver.lcd()
 
 mylcd.lcd_load_custom_chars(fontdata1)
 
