@@ -106,5 +106,6 @@ try:
         mylcd.lcd_write_char(6) # Right Bracket
 
         time.sleep(2)
+        mylcd.lcd_clear()
 except KeyboardInterrupt:
     exit()
