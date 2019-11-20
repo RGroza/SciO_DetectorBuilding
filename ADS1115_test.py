@@ -76,14 +76,14 @@ ads = ADS.ADS1115(i2c)
 # Create single-ended input on channel 0
 chan = AnalogIn(ads, ADS.P0)
 
-print('{:>5}\t{:>13}'.format('Raw', 'Voltage'))
-
 def average(values):
    return sum(values) / len(values)
 
 values = []
 try:
    temp = int(input("Input Temp (C" + u'\N{DEGREE SIGN}' + "): "))
+
+   print('\n{:>5}\t{:>13}'.format('Raw', 'Voltage'))
    for i in range(50):
       v = chan.voltage
       values.append(v)
