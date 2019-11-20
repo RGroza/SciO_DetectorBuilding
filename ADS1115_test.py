@@ -77,20 +77,30 @@ ads = ADS.ADS1115(i2c)
 chan = AnalogIn(ads, ADS.P0)
 
 print('{:>5}\t{:>13}'.format('Raw', 'Voltage'))
+
+def average(values):
+   return sum(values) / len(values)
+
 values = []
-def average(list):
-    return sum(list)/len(list)
 try:
-    for i in range(50):
-        u = chan.voltage
-        values.append(u)
-        print('{:>5}\t{:>5}'.format(chan.value, chan.voltage))
-        display.lcd_display_string('Voltage: ' + str(round(u, 8)) + 'V', 1)
-        sleep(0.2)
-        display.lcd_clear()
-    avg = average(values)
-    display.lcd_display_string('Average voltage: ', 1)
-    display.lcd_display_string(str(round(avg, 8)) + 'V', 2)
-    print('Average voltage: ' + str(avg) + 'V')
+   temp = int(input("Input Temp: "))
+   for i in range(50):
+      v = chan.voltage
+      values.append(v)
+
+      print('{:>5}\t{:>5}'.format(chan.value, chan.voltage))
+
+      if i % 5 == 0:
+         display.lcd_display_string('Voltage: ' + str(round(v, 8)) + 'V', 1)
+         display.lcd_clear()
+
+      sleep(0.2)
+
+   avg = average(values)
+
+   display.lcd_display_string('Average voltage: ', 1)
+   display.lcd_display_string(str(round(avg, 8)) + 'V', 2)
+
+   print('Average voltage: ' + str(avg) + 'V')
 except KeyboardInterrupt:
-    display.lcd_clear()
+   display.lcd_clear()
