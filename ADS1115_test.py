@@ -83,7 +83,7 @@ def average(values):
 
 values = []
 try:
-   temp = int(input("Input Temp: "))
+   temp = int(input("Input Temp (C" + u'\N{DEGREE SIGN}' + "): "))
    for i in range(50):
       v = chan.voltage
       values.append(v)
