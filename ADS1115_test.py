@@ -90,10 +90,10 @@ try:
 
       print('{:>5}\t{:>5}'.format(chan.value, chan.voltage))
 
-      display.lcd_display_string('Voltage: ' + str(round(v, 8)) + 'V', 1)
-      display.lcd_clear()
-
-      sleep(0.2)
+      if i % 5 == 0:
+         display.lcd_display_string('Voltage: ' + str(round(v, 8)) + 'V', 1)
+         sleep(0.2)
+         display.lcd_clear()
 
    avg = average(values)
 
