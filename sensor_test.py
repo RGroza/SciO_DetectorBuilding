@@ -5,6 +5,8 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
+import xlwt
+
 address = 0x27
 
 class i2c_device:
@@ -76,12 +78,27 @@ ads = ADS.ADS1115(i2c)
 # Create single-ended input on channel 0
 chan = AnalogIn(ads, ADS.P0)
 
+workbook = xlwt.Workbook()
+sheet = workbook.add_sheet("Sensor Data")
+
+bold_style = xlwt.easyxf('font: bold 1')
+
+first_col = sheet.col(0)
+second_col = sheet.col(1)
+
+first_col.width = 256 * 15
+second_col.width = 256 * 15
+
+sheet.write(0, 0, f"Temp (" + u'\N{DEGREE SIGN}' + "C)", bold_style)
+sheet.write(0, 1, "Avg V", bold_style)
+
 def average(values):
    return sum(values) / len(values)
 
 values = []
+data_iter = 0
 try:
-   temp = int(input("Input Temp (C" + u'\N{DEGREE SIGN}' + "): "))
+   tempStr = int(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C)"))
 
    print('\n{:>5}\t{:>13}'.format('Raw', 'Voltage'))
    for i in range(50):
@@ -91,15 +108,24 @@ try:
       print('{:>5}\t{:>5}'.format(chan.value, chan.voltage))
 
       if i % 5 == 0:
-         display.lcd_display_string('Voltage: ' + str(round(v, 8)) + 'V', 1)
+         display.lcd_display_string(f"Voltage: {str(round(v, 8))} V", 1)
          sleep(0.2)
          display.lcd_clear()
 
    avg = average(values)
+   rounded_avg = round(avg, 8)
 
-   display.lcd_display_string('Average voltage: ', 1)
-   display.lcd_display_string(str(round(avg, 8)) + 'V', 2)
+   display.lcd_display_string(f"Inputted Temp: {tempStr}")
+   display.lcd_display_string("Average voltage: ", 2)
+   display.lcd_display_string(f"{str(rounded_avg)} V", 3)
 
-   print('Average voltage: ' + str(avg) + 'V')
+   sheet.write(data_iter + 1, 0, tempStr)
+   sheet.write(data_iter + 1, 1, avg)
+   print("Data written!")
+
+   print(f"Average voltage: {str(avg)} V")
+
+   data_iter += 1
 except KeyboardInterrupt:
    display.lcd_clear()
+   workbook.save("data/sensor_data.xls")
