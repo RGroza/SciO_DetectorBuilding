@@ -5,8 +5,6 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
-import excel_write
-
 address = 0x27
 
 class i2c_device:
@@ -81,10 +79,23 @@ chan = AnalogIn(ads, ADS.P0)
 def average(values):
    return sum(values) / len(values)
 
+def open_file():
+   file_list = []
+   for file in os.listdir("/data"):
+       if file.endswith(".txt") and file.startswith("sensor_data"):
+           file_list.append(file)
+   file_iter = str(len(file_list)) if len(file_list) > 0 else ""
+   sensor_data = open(f"data/sensor_range{file_iter}.txt", "a")
+   sensor_data.write("Temp (" + u'\N{DEGREE SIGN}' + "C)" + "    Avg V")
+   print("File Opened!")
+   return sensor_data
+
+sensor_data = open_file()
+
 values = []
 data_iter = 0
 try:
-   tempStr = int(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C)"))
+   tempStr = round(float(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C)")), 1)
 
    print('\n{:>5}\t{:>13}'.format('Raw', 'Voltage'))
    for i in range(50):
@@ -105,11 +116,8 @@ try:
    display.lcd_display_string("Average voltage: ", 2)
    display.lcd_display_string(f"{str(rounded_avg)} V", 3)
 
-   excel_write.record_data(tempStr, rounded_avg, data_iter)
+   sensor_data.write(f"{tempStr}          {rounded_avg} V")
 
    print(f"Average voltage: {str(avg)} V")
-
-   data_iter += 1
 except KeyboardInterrupt:
    display.lcd_clear()
-   excel_write.save_data()
