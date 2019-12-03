@@ -5,7 +5,7 @@ import busio
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
-import xlwt
+import excel_write
 
 address = 0x27
 
@@ -14,7 +14,7 @@ class i2c_device:
       self.addr = addr
       self.bus = smbus.SMBus(port)
 
-# Write a single command
+   # Write a single command
    def write_cmd(self, cmd):
       self.bus.write_byte(self.addr, cmd)
       sleep(0.0001)
@@ -78,20 +78,6 @@ ads = ADS.ADS1115(i2c)
 # Create single-ended input on channel 0
 chan = AnalogIn(ads, ADS.P0)
 
-workbook = xlwt.Workbook()
-sheet = workbook.add_sheet("Sensor Data")
-
-bold_style = xlwt.easyxf('font: bold 1')
-
-first_col = sheet.col(0)
-second_col = sheet.col(1)
-
-first_col.width = 256 * 15
-second_col.width = 256 * 15
-
-sheet.write(0, 0, f"Temp (" + u'\N{DEGREE SIGN}' + "C)", bold_style)
-sheet.write(0, 1, "Avg V", bold_style)
-
 def average(values):
    return sum(values) / len(values)
 
@@ -119,13 +105,11 @@ try:
    display.lcd_display_string("Average voltage: ", 2)
    display.lcd_display_string(f"{str(rounded_avg)} V", 3)
 
-   sheet.write(data_iter + 1, 0, tempStr)
-   sheet.write(data_iter + 1, 1, avg)
-   print("Data written!")
+   excel_write.record_data(tempStr, rounded_avg, data_iter)
 
    print(f"Average voltage: {str(avg)} V")
 
    data_iter += 1
 except KeyboardInterrupt:
    display.lcd_clear()
-   workbook.save("data/sensor_data.xls")
+   excel_write.save_data()
