@@ -93,6 +93,7 @@ def open_file():
 
 sensor_data = open_file()
 
+values = []
 try:
    while True:
       tempStr = round(float(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C) ")), 1)
