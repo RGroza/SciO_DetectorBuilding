@@ -82,21 +82,19 @@ def average(values):
 
 def open_file():
    file_list = []
-   for file in os.listdir("/data"):
+   for file in os.listdir("data"):
        if file.endswith(".txt") and file.startswith("sensor_data"):
            file_list.append(file)
    file_iter = str(len(file_list)) if len(file_list) > 0 else ""
-   sensor_data = open(f"data/sensor_range{file_iter}.txt", "a")
+   sensor_data = open(f"data/sensor_data{file_iter}.txt", "a")
    sensor_data.write("Temp (" + u'\N{DEGREE SIGN}' + "C)" + "    Avg V")
    print("File Opened!")
    return sensor_data
 
 sensor_data = open_file()
 
-values = []
-data_iter = 0
 try:
-   tempStr = round(float(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C)")), 1)
+   tempStr = round(float(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C) ")), 1)
 
    print('\n{:>5}\t{:>13}'.format('Raw', 'Voltage'))
    for i in range(50):
@@ -117,7 +115,7 @@ try:
    display.lcd_display_string("Average voltage: ", 2)
    display.lcd_display_string(f"{str(rounded_avg)} V", 3)
 
-   sensor_data.write(f"{tempStr}          {rounded_avg} V")
+   sensor_data.write(f"\n{tempStr}         {rounded_avg}")
 
    print(f"Average voltage: {str(avg)} V")
 except KeyboardInterrupt:
