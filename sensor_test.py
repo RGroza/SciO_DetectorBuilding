@@ -94,29 +94,30 @@ def open_file():
 sensor_data = open_file()
 
 try:
-   tempStr = round(float(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C) ")), 1)
+   while True:
+      tempStr = round(float(input("Input Temp (" + u'\N{DEGREE SIGN}' + "C) ")), 1)
 
-   print('\n{:>5}\t{:>13}'.format('Raw', 'Voltage'))
-   for i in range(50):
-      v = chan.voltage
-      values.append(v)
+      print('\n{:>5}\t{:>13}'.format('Raw', 'Voltage'))
+      for i in range(50):
+         v = chan.voltage
+         values.append(v)
 
-      print('{:>5}\t{:>5}'.format(chan.value, chan.voltage))
+         print('{:>5}\t{:>5}'.format(chan.value, chan.voltage))
 
-      if i % 5 == 0:
-         display.lcd_display_string(f"Voltage: {str(round(v, 8))} V", 1)
-         sleep(0.2)
-         display.lcd_clear()
+         if i % 5 == 0:
+            display.lcd_display_string(f"Voltage: {str(round(v, 8))} V", 1)
+            sleep(0.2)
+            display.lcd_clear()
 
-   avg = average(values)
-   rounded_avg = round(avg, 8)
+      avg = average(values)
+      rounded_avg = round(avg, 8)
 
-   display.lcd_display_string(f"Inputted Temp: {tempStr}")
-   display.lcd_display_string("Average voltage: ", 2)
-   display.lcd_display_string(f"{str(rounded_avg)} V", 3)
+      display.lcd_display_string(f"Inputted Temp: {tempStr}")
+      display.lcd_display_string("Average voltage: ", 2)
+      display.lcd_display_string(f"{str(rounded_avg)} V", 3)
 
-   sensor_data.write(f"\n{tempStr}         {rounded_avg}")
+      sensor_data.write(f"\n{tempStr}         {rounded_avg}")
 
-   print(f"Average voltage: {str(avg)} V")
+      print(f"Average voltage: {str(avg)} V\n")
 except KeyboardInterrupt:
    display.lcd_clear()
