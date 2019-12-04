@@ -120,5 +120,6 @@ try:
       sensor_data.write(f"\n{tempStr}         {rounded_avg}")
 
       print(f"Average voltage: {str(avg)} V\n")
+      values = []
 except KeyboardInterrupt:
    display.lcd_clear()
