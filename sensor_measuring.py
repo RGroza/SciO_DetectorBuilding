@@ -1,3 +1,4 @@
+import RPi.GPIO as GPIO
 import time
 import smbus
 import board
@@ -7,11 +8,11 @@ from adafruit_ads1x15.analog_in import AnalogIn
 import os
 
 GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
+# GPIO.setmode(GPIO.BOARD)
 
-redLED = 16
-greenLED = 10
-blueLED = 12
+redLED = 23
+greenLED = 15
+blueLED = 18
 
 GPIO.setup(redLED, GPIO.OUT, initial=GPIO.LOW) # red LED
 GPIO.setup(greenLED, GPIO.OUT, initial=GPIO.LOW) # green LED
@@ -131,7 +132,7 @@ try:
          GPIO.output(redLED, GPIO.HIGH)
          GPIO.output(greenLED, GPIO.LOW)
          GPIO.output(blueLED, GPIO.LOW)
-      else if averageTemp > 50:
+      elif averageTemp > 50:
          GPIO.output(redLED, GPIO.LOW)
          GPIO.output(greenLED, GPIO.HIGH)
          GPIO.output(blueLED, GPIO.LOW)
