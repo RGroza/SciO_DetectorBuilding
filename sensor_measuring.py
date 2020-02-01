@@ -156,3 +156,4 @@ try:
       # values = []
 except KeyboardInterrupt:
    display.lcd_clear()
+   GPIO.cleanup()
