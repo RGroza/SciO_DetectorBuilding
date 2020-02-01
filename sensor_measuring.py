@@ -6,6 +6,17 @@ import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 import os
 
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+
+redLED = 16
+greenLED = 10
+blueLED = 12
+
+GPIO.setup(redLED, GPIO.OUT, initial=GPIO.LOW) # red LED
+GPIO.setup(greenLED, GPIO.OUT, initial=GPIO.LOW) # green LED
+GPIO.setup(blueLED, GPIO.OUT, initial=GPIO.LOW) # blue LED
+
 address = 0x27
 
 class i2c_device:
@@ -115,6 +126,19 @@ try:
 
       display.lcd_clear()
       display.lcd_display_string("Temp: " + str(round(averageTemp, 4)) + u'\N{DEGREE SIGN}' + "C", 1)
+
+      if averageTemp > 75:
+         GPIO.output(redLED, GPIO.HIGH)
+         GPIO.output(greenLED, GPIO.LOW)
+         GPIO.output(blueLED, GPIO.LOW)
+      else if averageTemp > 50:
+         GPIO.output(redLED, GPIO.LOW)
+         GPIO.output(greenLED, GPIO.HIGH)
+         GPIO.output(blueLED, GPIO.LOW)
+      else:
+         GPIO.output(redLED, GPIO.LOW)
+         GPIO.output(greenLED, GPIO.LOW)
+         GPIO.output(blueLED, GPIO.HIGH)
 
       # if elapsed_printouts % 5 == 0:
 

@@ -7,6 +7,7 @@ from adafruit_ads1x15.analog_in import AnalogIn
 import os
 
 address = 0x27
+
 class i2c_device:
    def __init__(self, addr, port=1):
       self.addr = addr
