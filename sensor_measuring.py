@@ -116,30 +116,38 @@ printout_interval = 1 # in sec
 
 try:
    while True:
-      for i in range(rps):
-         values = []
-         v = chan.voltage
-         values.append(v)
-         time.sleep(printout_interval / rps)
+      for j in range(10):
+         averages = []
+         for i in range(rps):
+            values = []
+            v = chan.voltage
+            values.append(v)
+            time.sleep(printout_interval / rps)
 
-      averageTemp = temp_function(average(values))
-      print("Temp: " + str(averageTemp) + u'\N{DEGREE SIGN}' + "C")
+         averageTemp = temp_function(average(values))
+         print("Temp: " + str(averageTemp) + u'\N{DEGREE SIGN}' + "C")
 
-      display.lcd_clear()
-      display.lcd_display_string("Temp: " + str(round(averageTemp, 4)) + u'\N{DEGREE SIGN}' + "C", 1)
+         display.lcd_clear()
+         display.lcd_display_string("Temp: " + str(round(averageTemp, 4)) + u'\N{DEGREE SIGN}' + "C", 1)
+         display.lcd_display_string(avgTempStr, 2)
 
-      if averageTemp > 75:
-         GPIO.output(redLED, GPIO.HIGH)
-         GPIO.output(greenLED, GPIO.LOW)
-         GPIO.output(blueLED, GPIO.LOW)
-      elif averageTemp > 50:
-         GPIO.output(redLED, GPIO.LOW)
-         GPIO.output(greenLED, GPIO.HIGH)
-         GPIO.output(blueLED, GPIO.LOW)
-      else:
-         GPIO.output(redLED, GPIO.LOW)
-         GPIO.output(greenLED, GPIO.LOW)
-         GPIO.output(blueLED, GPIO.HIGH)
+         if averageTemp > 75:
+            GPIO.output(redLED, GPIO.HIGH)
+            GPIO.output(greenLED, GPIO.LOW)
+            GPIO.output(blueLED, GPIO.LOW)
+         elif averageTemp > 50:
+            GPIO.output(redLED, GPIO.LOW)
+            GPIO.output(greenLED, GPIO.HIGH)
+            GPIO.output(blueLED, GPIO.LOW)
+         else:
+            GPIO.output(redLED, GPIO.LOW)
+            GPIO.output(greenLED, GPIO.LOW)
+            GPIO.output(blueLED, GPIO.HIGH)
+
+         averages.append(averageTemp)
+      avgTemps = average(averages)
+      avgTempStr = "AVG Temp: " + str(round(avgTemps, 4)) + u'\N{DEGREE SIGN}' + "C"
+      display.lcd_display_string(avgTempStr, 2)
 
       # if elapsed_printouts % 5 == 0:
 
