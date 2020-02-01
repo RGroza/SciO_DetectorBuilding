@@ -77,19 +77,19 @@ ads = ADS.ADS1115(i2c)
 # Create single-ended input on channel 0
 chan = AnalogIn(ads, ADS.P0)
 
-def open_file():
-   file_list = []
-   for file in os.listdir("data"):
-       if file.endswith(".txt") and file.startswith("sensor_temps"):
-           file_list.append(file)
-   file_iter = str(len(file_list)) if len(file_list) > 0 else ""
-   sensor_data = open(f"data/sensor_temps{file_iter}.txt", "a")
-   sensor_data.write("Time:    " + "Temp (" + u'\N{DEGREE SIGN}' + "C)")
-   print("File Opened!")
-   return sensor_data
+# def open_file():
+#    file_list = []
+#    for file in os.listdir("data"):
+#        if file.endswith(".txt") and file.startswith("sensor_temps"):
+#            file_list.append(file)
+#    file_iter = str(len(file_list)) if len(file_list) > 0 else ""
+#    sensor_data = open(f"data/sensor_temps{file_iter}.txt", "a")
+#    sensor_data.write("Time:    " + "Temp (" + u'\N{DEGREE SIGN}' + "C)")
+#    print("File Opened!")
+#    return sensor_data
 
 def temp_function(v):
-    return 9.76*10**-3 * v + 0.489
+    return 102*v - 50.1
 
 def average(values):
    return sum(values) / len(values)
@@ -111,10 +111,10 @@ try:
          time.sleep(printout_interval / rps)
 
       averageTemp = temp_function(average(values))
-      print("Temp: " + averageTemp + u'\N{DEGREE SIGN}' + "C")
+      print("Temp: " + str(averageTemp) + u'\N{DEGREE SIGN}' + "C")
 
       display.lcd_clear()
-      display.lcd_display_string(f"Temp: " + round(averageTemp, 4) + u'\N{DEGREE SIGN}' + "C", 1)
+      display.lcd_display_string("Temp: " + str(round(averageTemp, 4)) + u'\N{DEGREE SIGN}' + "C", 1)
 
       # if elapsed_printouts % 5 == 0:
 
